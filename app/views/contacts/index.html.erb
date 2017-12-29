@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Contacts</h1>
+
+<h5> Please check <a href="https://www.spamhaus.org/query/ip/51.15.205.197" target="blank">https://www.spamhaus.org/query/ip/51.15.205.197</a> to see if this ip is still clean</h5>
+<br>
+<br>
+<h5> enter ONLY email adresses below (copy from csv) </h1>
+<form accept-charset="UTF-8" action="/check_emails" method="post">
+  <input name="utf8" type="hidden" value="&#x2713;" />
+  <input name="authenticity_token" type="hidden" value="J7CBxfHalt49OSHp27hblqK20c9PgwJ108nDHX/8Cts=" />
+  <%= text_area_tag(:message, "test@diduenjoy.com\ntest2@example.com", size: "24x6") %>
+  <%= submit_tag("check_emails") %>
+</form>
+
+<br>
+
+<form accept-charset="UTF-8" action="/delete_all" method="post">
+  <input name="utf8" type="hidden" value="&#x2713;" />
+  <input name="authenticity_token" type="hidden" value="J7CBxfHalt49OSHp27hblqK20c9PgwJ108nDHX/8Cts=" />
+  <%= text_field_tag(:message, "tap 'delete' and press the button ", size: "24x6") %>
+  <%= submit_tag("DELETE ALL CARE") %>
+</form>
+
+
+<br>
+<br>
+
+<h4>export <%= @contacts.size %> as csv</h4>
+<form accept-charset="UTF-8" action="/download_all" method="post">
+  <input name="utf8" type="hidden" value="&#x2713;" />
+  <input name="authenticity_token" type="hidden" value="J7CBxfHalt49OSHp27hblqK20c9PgwJ108nDHX/8Cts=" />
+  <%= submit_tag("export as csv") %>
+</form>
+
+
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Is valid</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @contacts.each do |contact| %>
+      <tr>
+        <td><%= contact.email %></td>
+        <td><%= contact.is_valid %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Contact', new_contact_path %>
